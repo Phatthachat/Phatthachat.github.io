@@ -37,17 +37,14 @@
       border: 1px solid #ccc;
       border-radius: 8px;
     }
-    input[type="submit"], .order-btn {
+    input[type="submit"] {
       background-color: #2ecc71;
       color: white;
       border: none;
       cursor: pointer;
       margin-top: 15px;
-      padding: 10px;
-      border-radius: 8px;
-      width: 100%;
     }
-    input[type="submit"]:hover, .order-btn:hover {
+    input[type="submit"]:hover {
       background-color: #27ae60;
     }
     .product-list {
@@ -101,30 +98,68 @@
 </head>
 <body>
   <div class="container">
-    <h1>คลังสินค้า - สินค้าที่ระลึก</h1>
-    <div class="nav">
-      <a href="admin.html">เพิ่ม/จัดการสินค้า (Admin)</a>
-    </div>
+    <h1>Admin - จัดการสินค้า</h1>
+    <form id="productForm">
+      <label for="name">ชื่อสินค้า:</label>
+      <input type="text" id="name" required>
 
-    <h2>รายการสินค้า</h2>
+      <label for="price">ราคาสินค้า:</label>
+      <input type="number" id="price" required>
+
+      <label for="image">URL รูปสินค้า:</label>
+      <input type="text" id="image" required>
+
+      <input type="submit" value="เพิ่มสินค้า">
+    </form>
+
+    <h2>รายการสินค้าในสต๊อก</h2>
     <div class="product-list" id="stock"></div>
+
+    <div class="nav">
+      <a href="index.html">ไปยังหน้าสั่งซื้อ</a>
+    </div>
   </div>
 
   <script>
-    const stock = JSON.parse(localStorage.getItem('stock')) || [];
-    const stockDiv = document.getElementById('stock');
+    let stock = JSON.parse(localStorage.getItem('stock')) || [];
 
-    stock.forEach((product, index) => {
-      const div = document.createElement('div');
-      div.className = 'product';
-      div.innerHTML = `
-        <img src="${product.image}" alt="สินค้า">
-        <p><strong>${product.name}</strong></p>
-        <p>${product.price} บาท</p>
-        <button class="order-btn" onclick="window.location.href='customer.html?product=${encodeURIComponent(product.name)}'">สั่งซื้อ</button>
-      `;
-      stockDiv.appendChild(div);
+    function renderStock() {
+      const stockDiv = document.getElementById('stock');
+      stockDiv.innerHTML = '';
+      stock.forEach((product, index) => {
+        const div = document.createElement('div');
+        div.className = 'product';
+        div.innerHTML = `
+          <img src="${product.image}" alt="สินค้า">
+          <p><strong>${product.name}</strong></p>
+          <p>${product.price} บาท</p>
+          <button class="delete-btn" onclick="deleteProduct(${index})">ลบสินค้า</button>
+        `;
+        stockDiv.appendChild(div);
+      });
+    }
+    
+    function deleteProduct(index) {
+      if (confirm('คุณแน่ใจว่าต้องการลบสินค้านี้?')) {
+        stock.splice(index, 1);
+        localStorage.setItem('stock', JSON.stringify(stock));
+        renderStock();
+      }
+    }
+
+    document.getElementById('productForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const price = document.getElementById('price').value;
+      const image = document.getElementById('image').value;
+
+      stock.push({ name, price, image });
+      localStorage.setItem('stock', JSON.stringify(stock));
+      this.reset();
+      renderStock();
     });
+
+    renderStock();
   </script>
 </body>
 </html>

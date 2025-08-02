@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>สั่งซื้อของที่ระลึก 30 ปี</title>
+  <style>
+    body {
+      font-family: 'Prompt', sans-serif;
+      background-color: #eaf0f6;
+      padding: 20px;
+    }
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+    }
+    .form-container {
+      background: white;
+      max-width: 650px;
+      margin: auto;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+    input[type="submit"] {
+      background-color: #2c3e50;
+      color: white;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover {
+      background-color: #34495e;
+    }
+  </style>
+</head>
+<body>
+
+<h1>แบบฟอร์มสั่งซื้อของที่ระลึก</h1>
+<div class="form-container">
+  <form>
+    <label>ชื่อ-นามสกุล:</label>
+    <input type="text" name="fullname" required>
+
+    <label>ที่อยู่สำหรับจัดส่ง:</label>
+    <textarea name="address" rows="3" required></textarea>
+
+    <label>เบอร์โทร:</label>
+    <input type="tel" name="phone" required>
+
+    <label>เลือกรายการสินค้า:</label>
+    <textarea name="productList" rows="3" placeholder="เช่น เสื้อ M สีดำ 1 ตัว, แก้ว 2 ใบ" required></textarea>
+
+    <label>แนบรูปสลิปการโอนเงิน:</label>
+    <input type="file" name="slipImage" accept="image/*" required>
+
+    <label>วันที่สั่งซื้อ:</label>
+    <input type="date" name="purchaseDate" required>
+
+    <label>เลือกรูปแบบการรับสินค้า:</label>
+    <select name="deliveryOption">
+      <option value="ส่งไปรษณีย์">จัดส่ง</option>
+      <option value="รับเอง">รับเองที่งาน</option>
+    </select>
+
+    <label>ช่องทางชำระเงิน:</label>
+    <select name="paymentMethod">
+      <option value="โอนผ่านธนาคาร">โอนผ่านธนาคาร</option>
+      <option value="พร้อมเพย์">พร้อมเพย์</option>
+      <option value="เงินสด">เงินสด</option>
+    </select>
+
+    <input type="submit" value="ส่งคำสั่งซื้อ">
+  </form>
+</div>
+
+</body>
+</html>
